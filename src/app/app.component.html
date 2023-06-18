@@ -1,13 +1,21 @@
+<div *ngIf="router.url == '/'">
+  <h1>{{ title }}</h1>
 
-<style>
-  .toolbar {
-    background-color: black;
-  }
-</style>
+  <div *ngIf="isLoading">
+    <p>Loading...</p>
+  </div>
 
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
- <h1 class="toolbar__h1">Hello angular</h1>
+  <div *ngIf="!isLoading">
+    <ul *ngIf="data">
+      <li *ngFor="let item of data">{{ item.name }}</li>
+    </ul>
+    <a routerLink="/home-component">Home</a>
+  </div>
+
+  <p>hello my name is {{name}}</p>
+<input type="text" [(ngModel)]="name">
 </div>
+<button [ngClass]="'button'" (click)="saludar()">saludar</button>
+
 
 <router-outlet></router-outlet>
