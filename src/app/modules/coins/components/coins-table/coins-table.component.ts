@@ -33,10 +33,12 @@ export class CoinsTableComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   async ngOnInit(): Promise<void> {
-    this.coins = await this.coingeckoService.getCoins();
-    this.dataSource = new MatTableDataSource(this.coins);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    (await this.coingeckoService.getCoins()).subscribe(coins => {
+      this.coins = coins;
+      this.dataSource = new MatTableDataSource(this.coins);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
   constructor(private coingeckoService: CoingeckoService) {}
 

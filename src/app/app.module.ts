@@ -11,11 +11,12 @@ import { NavComponent } from './components/nav/nav.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, NavComponent],
+  declarations: [AppComponent, NavComponent, FavoritesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
