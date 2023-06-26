@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ICoin } from 'src/app/models/Icoins';
 import { CoingeckoService } from 'src/app/services/coingecko.service';
+import { FavoritesService } from 'src/app/services/favorites.service';
 
 @Component({
   selector: 'app-coins-table',
@@ -25,7 +26,14 @@ import { CoingeckoService } from 'src/app/services/coingecko.service';
   ],
 })
 export class CoinsTableComponent implements OnInit {
-  displayedColumns: string[] = ['symbol', 'name', 'high', 'low', 'price'];
+  displayedColumns: string[] = [
+    'symbol',
+    'name',
+    'high',
+    'low',
+    'price',
+    'favorites',
+  ];
   dataSource: MatTableDataSource<ICoin> = new MatTableDataSource();
   coins: ICoin[] = [];
 
@@ -33,14 +41,17 @@ export class CoinsTableComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   async ngOnInit(): Promise<void> {
-    (await this.coingeckoService.getCoins()).subscribe(coins => {
+    (await this.coingeckoService.getCoins()).subscribe((coins) => {
       this.coins = coins;
       this.dataSource = new MatTableDataSource(this.coins);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
-  constructor(private coingeckoService: CoingeckoService) {}
+  constructor(
+    private coingeckoService: CoingeckoService,
+    private favoritesService: FavoritesService
+  ) {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -49,5 +60,16 @@ export class CoinsTableComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  favorite(coin: ICoin) {
+    this.favoritesService.addFavorite(coin);
+  }
+
+  isFavorite(coin: ICoin) {
+    return this.favoritesService.isFavoriteCharacter(coin);
+  }
+  removed(coin: ICoin) {
+    this.favoritesService.removeFavorite(coin);
   }
 }

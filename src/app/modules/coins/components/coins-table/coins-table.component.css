@@ -1,3 +1,7 @@
+th {
+    color: darkgrey;
+}
+
 .green {
     color: rgb(34, 163, 34);
     font-weight: bold;
@@ -8,6 +12,17 @@
     font-weight: bold;  
 }
 
+.white {
+    color: rgb(190, 182, 182);
+}
+
 .mat-elevation-z8 {
     overflow-x: auto;
+}
+
+.imgCoins {
+    width: 20px;
+    height: 20px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
